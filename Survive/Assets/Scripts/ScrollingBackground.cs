@@ -15,7 +15,7 @@ public class ScrollingBackground : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		_height = top.sprite.texture.height;
+		_height = Utility.GetSpriteHeight(top);
 		_scrollRenderers(-scrollSpeed * UnityEngine.Random.value);
 	}
 	
@@ -32,8 +32,10 @@ public class ScrollingBackground : MonoBehaviour {
 	}
 	private void _scroll(SpriteRenderer renderer, float amount){
 		renderer.transform.position += new Vector3(0, amount, 0);
+//		float halfHeight = _height * 0.5f;
+//		float bottom = Utility.GetBottomEdge() - halfHeight;
 		if (renderer.transform.position.y < -_height){
-			renderer.transform.position += new Vector3(0, _height, 0);					
+			renderer.transform.position += new Vector3(0, _height * 2.0f, 0);					
 		}
 	}
 #endregion
