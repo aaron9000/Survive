@@ -29,9 +29,10 @@ public class FallingDebris : MonoBehaviour {
 		_rotationVelocity = (UnityEngine.Random.value - 0.5f) * 40;
 
 		// Adjust size of sprite
+		bool reversed = UnityEngine.Random.value < 0.5f;
 		float scale = Mathf.Lerp(MIN_SCALE, MAX_SCALE, _normalizedDepth);
-		sprite.transform.localScale = new Vector3(scale, scale, 1.0f);
-
+		sprite.transform.localScale = new Vector3(reversed ? scale : -scale, scale, 1.0f);
+		sprite.sortingOrder = (int)(_normalizedDepth * 1000);
 	}
 	
 	// Update is called once per frame

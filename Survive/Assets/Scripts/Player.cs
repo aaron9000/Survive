@@ -5,6 +5,8 @@ public class Player : MonoBehaviour {
 
 	// Connections
 	public SpriteRenderer sprite;	
+	public GameObject bloodPrefab;
+	public GameObject gibPrefab;
 
 	// Internal State
 	private bool _parachuteActive = false;
@@ -73,6 +75,8 @@ public class Player : MonoBehaviour {
 
 #region Internal Helpers
 	private void _bounceOfWall(float wallX){
+
+		// Handle phyics
 		Vector3 pos = transform.position;
 		float middle = Utility.GetMiddleX();
 		if ((pos.x > wallX && wallX > middle) || (pos.x < wallX && wallX < middle)){
@@ -83,7 +87,16 @@ public class Player : MonoBehaviour {
 			}else{
 				_velocity += new Vector2(-BOUNCE_SPEED, 0);
 			}
+			_bloodEffect();
 		}
+	}
+	private void _bloodEffect(){
+		GameObject p = (GameObject)GameObject.Instantiate(bloodPrefab);
+		p.transform.position = transform.position;
+	}
+	private void _gibEffect(){
+		GameObject p = (GameObject)GameObject.Instantiate(gibPrefab);
+		p.transform.position = transform.position;
 	}
 #endregion
 
@@ -93,6 +106,7 @@ public class Player : MonoBehaviour {
 		return Utility.ScaleRect(fullSizeRect, transform.localScale.x);
 	}
 	public void Die(){
+		_gibEffect();
 		GameObject.Destroy(this.gameObject);
 	}
 	public void DeployParachute(){

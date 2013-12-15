@@ -7,7 +7,6 @@ public class Obstacle : MonoBehaviour {
 	public SpriteRenderer sprite;
 
 	// Internal State
-	private float _scale = 1.0f;
 	private float _height = 0.0f;
 
 	// Constants
@@ -16,6 +15,9 @@ public class Obstacle : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_height = Utility.GetSpriteHeight(sprite);
+		bool reversed = UnityEngine.Random.value < 0.5f;
+		float scale = UnityEngine.Random.value * 0.5f + 0.5f;
+		this.transform.localScale = new Vector3(reversed ? scale : -scale, 1.0f);
 	}
 
 	// Update is called once per frame
@@ -24,10 +26,11 @@ public class Obstacle : MonoBehaviour {
 		// Move upwards
 		transform.Translate(new Vector3(0.0f, SPEED * Time.deltaTime, 0.0f));
 
-		// Kill player
-		float top = (sprite.bounds.size.y * 0.5f * 0.9f) + sprite.bounds.center.y;
+		// Kill player on collision
+		float scale = UnityEngine.Random.value * 0.5f + 0.5f;
+		float top = (sprite.bounds.size.y * 0.5f * 0.9f * scale) + sprite.bounds.center.y;
 		float x = sprite.bounds.center.x;
-		float width = sprite.bounds.size.x;
+		float width = sprite.bounds.size.x * scale;
 		Vector2 linePos = new Vector2(x, top);
 		Rect playerRect = GameLogic.GetPlayerRect();
 		if (Utility.HorizontalLineIntersect(linePos, width, playerRect)){

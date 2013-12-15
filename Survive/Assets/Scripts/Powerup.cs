@@ -5,6 +5,8 @@ public class Powerup : MonoBehaviour {
 
 	// Connections
 	public SpriteRenderer sprite;
+	public SpriteRenderer glow;
+	public GameObject sparklePrefab;
 
 	// Internal State
 	private float _height = 0.0f;
@@ -28,6 +30,7 @@ public class Powerup : MonoBehaviour {
 		Rect playerRect = GameLogic.GetPlayerRect();
 		if (Utility.Intersect(rect, playerRect)){
 			GameLogic.AwardPowerup();
+			_sparkleEffect();
 			GameObject.Destroy(this.gameObject);
 		}
 
@@ -36,5 +39,15 @@ public class Powerup : MonoBehaviour {
 		if (transform.position.y > topEdge){
 			GameObject.Destroy(this.gameObject);
 		}
+
+		// Animate
+		float scale = (Mathf.Sin(Time.time) * 0.1f + 0.9f) * 1.75f;
+		glow.transform.Rotate(Vector3.forward, Time.deltaTime * 15.0f);
+		glow.transform.localScale = new Vector3(scale, scale, scale);
+	}
+
+	private void _sparkleEffect(){
+		GameObject p = (GameObject)GameObject.Instantiate(sparklePrefab);
+		p.transform.position = transform.position;
 	}
 }
