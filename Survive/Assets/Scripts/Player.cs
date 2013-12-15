@@ -9,7 +9,6 @@ public class Player : MonoBehaviour {
 	public GameObject gibPrefab;
 
 	// Internal State
-	private bool _parachuteActive = false;
 	private float _parachuteLivetime = 0.0f;
 	private float _width = 0.0f;
 	private float _timeAlive = 0.0f;
@@ -69,6 +68,9 @@ public class Player : MonoBehaviour {
 		transform.position = new Vector3(transform.position.x, y, 0);
 		sprite.transform.Rotate(Vector3.forward, Time.deltaTime * (idleRotateVelocity + spinBonus));
 		_timeAlive += Time.deltaTime;
+
+		// Tick down powerup
+		_parachuteLivetime -= Time.deltaTime;
 	}
 
 #endregion
@@ -110,7 +112,10 @@ public class Player : MonoBehaviour {
 		GameObject.Destroy(this.gameObject);
 	}
 	public void DeployParachute(){
-
+		_parachuteLivetime = 5.0f; 
+	}
+	public bool ParachuteIsActive(){
+		return _parachuteLivetime > 0.0f;
 	}
 #endregion
 }

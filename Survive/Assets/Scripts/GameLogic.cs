@@ -59,6 +59,11 @@ public class GameLogic : MonoBehaviour {
 	protected float _getSpeedScale(){
 		float delta = MAX_SPEED_SCALE - MIN_SPEED_SCALE;
 		float speedScale = Mathf.Clamp01(_gameTime / RAMP_UP_TIME) * delta + MIN_SPEED_SCALE;
+		if (player != null){
+			if (player.GetComponent<Player>().ParachuteIsActive()){
+				speedScale *= 0.5f;
+			}
+		}
 		return speedScale;
 	}
 	protected float _getObstacleDelay(){
