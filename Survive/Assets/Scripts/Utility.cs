@@ -51,4 +51,33 @@ public class Utility{
 		Vector2 vec2 = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 		return new Vector3(vec2.x * radius, vec2.y * radius, 0);
 	}
+	public static bool HorizontalLineIntersect(Vector2 linePos, float lineWidth, Rect rect){
+		Rect lineRect = new Rect(linePos.x - lineWidth * 0.5f, linePos.y + 0.01f, lineWidth, 0.02f);
+		return Intersect(lineRect, rect);
+	}
+	public static bool Intersect(Rect a, Rect b) {
+            FlipNegative(ref a);
+            FlipNegative(ref b);
+            bool c1 = a.xMin < b.xMax;
+            bool c2 = a.xMax > b.xMin;
+            bool c3 = a.yMin < b.yMax;
+            bool c4 = a.yMax > b.yMin;
+            return c1 && c2 && c3 && c4;
+	}
+    private static void FlipNegative(ref Rect r) {
+	    if (r.width < 0)
+	        r.x -= ( r.width *= -1 );
+	
+	    if (r.height < 0)
+			r.y -= (r.height *= -1);
+	}
+	public static Rect RectForBounds(Bounds bounds){
+		return new Rect(bounds.center.x - bounds.size.x *  0.5f, bounds.center.y - bounds.size.y *  0.5f, bounds.size.x, bounds.size.y);
+	}
+	public static Rect ScaleRect(Rect rect, float scale){
+		Vector2 center = rect.center;
+		float newWidth = rect.width * scale;
+		float newHeight = rect.height * scale;
+		return new Rect(center.x - newWidth * 0.5f, center.y - newHeight * 0.5f, newWidth, newHeight);
+	}
 }

@@ -59,13 +59,10 @@ public class Player : MonoBehaviour {
 		_bounceOfWall(leftEdge);
 		_bounceOfWall(rightEdge);
 
-		// Detect obstalce collision
-
 		// Animation
-		// Bobbing animation
 		float spinBonus = _velocity.x * -50;
 		float idleRotateVelocity = _lastDirectionWasLeft ? 25.0f : -25.0f;
-		float y =  _anchorY + (Mathf.Sin(_timeAlive) * _width * 0.25f);
+		float y =  _anchorY + (Mathf.Sin(_timeAlive) * _width * 0.35f);
 		transform.position = new Vector3(transform.position.x, y, 0);
 		sprite.transform.Rotate(Vector3.forward, Time.deltaTime * (idleRotateVelocity + spinBonus));
 
@@ -83,5 +80,13 @@ public class Player : MonoBehaviour {
 				_velocity += new Vector2(-BOUNCE_SPEED, 0);
 			}
 		}
+	}
+
+	public Rect GetRect(){
+		Rect fullSizeRect = Utility.RectForBounds(sprite.bounds);
+		return Utility.ScaleRect(fullSizeRect, transform.localScale.x);
+	}
+	public void Die(){
+		GameObject.Destroy(this.gameObject);
 	}
 }
