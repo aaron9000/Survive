@@ -19,12 +19,12 @@ public class ObstacleSpawner : MonoBehaviour {
 	void Update () {
 		_cooldown -= Time.deltaTime;
 		if (_cooldown <= 0){
-			if (UnityEngine.Random.value > 0.1f){
+			if (UnityEngine.Random.value > Constants.PowerupChance){
 				_spawnObject(obstaclePrefab);
 			}else{
 				_spawnObject(powerupPrefab);
 			}
-			_cooldown = 3.0f;
+			_cooldown = GameLogic.GetObstacleDelay();
 		}
 	}
 	private void _spawnObject(GameObject prefab){

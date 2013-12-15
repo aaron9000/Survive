@@ -65,7 +65,7 @@ public class Player : MonoBehaviour {
 		// Animation
 		float spinBonus = _velocity.x * -50;
 		float idleRotateVelocity = _lastDirectionWasLeft ? 25.0f : -25.0f;
-		float y =  _anchorY + (Mathf.Sin(_timeAlive) * _width * 0.35f);
+		float y =  _anchorY + (Mathf.Sin(_timeAlive * 1.25f) * _width * 0.6f);
 		transform.position = new Vector3(transform.position.x, y, 0);
 		sprite.transform.Rotate(Vector3.forward, Time.deltaTime * (idleRotateVelocity + spinBonus));
 		_timeAlive += Time.deltaTime;

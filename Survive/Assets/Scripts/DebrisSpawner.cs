@@ -11,7 +11,7 @@ public class DebrisSpawner : MonoBehaviour {
 
 	// Constants
 	private const float START_COUNT = 10;
-	private const float SPAWN_COOLDOWN = 1.0f;
+	private const float SPAWN_COOLDOWN = 0.5f;
 
 	// Use this for initialization
 	void Start () {

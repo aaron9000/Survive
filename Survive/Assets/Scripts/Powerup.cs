@@ -23,7 +23,7 @@ public class Powerup : MonoBehaviour {
 	void Update () {
 
 		// Move upwards
-		transform.Translate(new Vector3(0.0f, SPEED * Time.deltaTime, 0.0f));
+		transform.Translate(new Vector3(0.0f, SPEED * Time.deltaTime * GameLogic.GetSpeedScale(), 0.0f));
 
 		// Collide with player
 		Rect rect = Utility.RectForBounds(sprite.bounds);

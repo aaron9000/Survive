@@ -39,7 +39,7 @@ public class FallingDebris : MonoBehaviour {
 	void Update () {
 		
 		// Fall and rotate
-		transform.position += new Vector3(0, _fallSpeed * Time.deltaTime, 0);
+		transform.position += new Vector3(0, _fallSpeed * Time.deltaTime * GameLogic.GetSpeedScale(), 0);
 		transform.Rotate(Vector3.forward, Time.deltaTime * _rotationVelocity);
 
 		// Destroy self?

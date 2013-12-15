@@ -21,7 +21,7 @@ public class ScrollingBackground : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		_scrollRenderers(-scrollSpeed * Time.deltaTime);
+		_scrollRenderers(-scrollSpeed * Time.deltaTime * GameLogic.GetSpeedScale());
 	}
 #endregion
 

@@ -5,6 +5,8 @@ public class Obstacle : MonoBehaviour {
 
 	// Connections
 	public SpriteRenderer sprite;
+	public Sprite spriteA;
+	public Sprite spriteB;
 
 	// Internal State
 	private float _height = 0.0f;
@@ -18,13 +20,18 @@ public class Obstacle : MonoBehaviour {
 		bool reversed = UnityEngine.Random.value < 0.5f;
 		float scale = UnityEngine.Random.value * 0.5f + 0.5f;
 		this.transform.localScale = new Vector3(reversed ? scale : -scale, 1.0f);
+		if (UnityEngine.Random.value < 0.5f){
+			sprite.sprite = spriteA;
+		}else{
+			sprite.sprite = spriteB;
+		}
 	}
 
 	// Update is called once per frame
 	void Update () {
 
 		// Move upwards
-		transform.Translate(new Vector3(0.0f, SPEED * Time.deltaTime, 0.0f));
+		transform.Translate(new Vector3(0.0f, SPEED * Time.deltaTime * GameLogic.GetSpeedScale(), 0.0f));
 
 		// Kill player on collision
 		float scale = UnityEngine.Random.value * 0.5f + 0.5f;
