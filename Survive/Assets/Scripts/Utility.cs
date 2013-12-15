@@ -31,6 +31,9 @@ public class Utility{
 	public static float GetWidth(){
 		return Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0, 0)).x * 2.0f;
 	}
+	public static float GetMiddleX(){
+		return (GetLeftEdge() + GetRightEdge() * 0.5f);
+	}
 	public static float GetSpriteHeight(SpriteRenderer sprite){
 		float scaleRatio = sprite.sprite.texture.height / Constants.ScreenHeight;
 		Debug.Log(sprite.sprite.texture.height);
