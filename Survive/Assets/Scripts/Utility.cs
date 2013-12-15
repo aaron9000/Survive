@@ -36,7 +36,6 @@ public class Utility{
 	}
 	public static float GetSpriteHeight(SpriteRenderer sprite){
 		float scaleRatio = sprite.sprite.texture.height / Constants.ScreenHeight;
-		Debug.Log(sprite.sprite.texture.height);
 		return scaleRatio * GetHeight();
 	}
 	public static float GetSpriteWidth(SpriteRenderer sprite){

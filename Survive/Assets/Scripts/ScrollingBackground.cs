@@ -31,11 +31,9 @@ public class ScrollingBackground : MonoBehaviour {
 		_scroll(bottom, amount);
 	}
 	private void _scroll(SpriteRenderer renderer, float amount){
-		renderer.transform.position += new Vector3(0, amount, 0);
-//		float halfHeight = _height * 0.5f;
-//		float bottom = Utility.GetBottomEdge() - halfHeight;
-		if (renderer.transform.position.y < -_height){
-			renderer.transform.position += new Vector3(0, _height * 2.0f, 0);					
+		renderer.transform.position -= new Vector3(0, amount, 0);
+		if (renderer.transform.position.y > _height){
+			renderer.transform.position -= new Vector3(0, _height * 2.0f, 0);					
 		}
 	}
 #endregion
