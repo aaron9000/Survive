@@ -23,6 +23,14 @@ public class Powerup : MonoBehaviour {
 		// Move upwards
 		transform.Translate(new Vector3(0.0f, SPEED * Time.deltaTime, 0.0f));
 
+		// Collide with player
+		Rect rect = Utility.RectForBounds(sprite.bounds);
+		Rect playerRect = GameLogic.GetPlayerRect();
+		if (Utility.Intersect(rect, playerRect)){
+			GameLogic.AwardPowerup();
+			GameObject.Destroy(this.gameObject);
+		}
+
 		// Destroy when offscreen
 		float topEdge = Utility.GetTopEdge() + _height;
 		if (transform.position.y > topEdge){

@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
 	private const float PLAYER_SCALE = 0.5f;
 	private const float BOUNCE_SPEED = 3.0f;
 
+#region Unity Lifecycle
 	// Use this for initialization
 	void Start () {
 		_width = Utility.GetSpriteWidth(sprite) * PLAYER_SCALE;	
@@ -65,9 +66,12 @@ public class Player : MonoBehaviour {
 		float y =  _anchorY + (Mathf.Sin(_timeAlive) * _width * 0.35f);
 		transform.position = new Vector3(transform.position.x, y, 0);
 		sprite.transform.Rotate(Vector3.forward, Time.deltaTime * (idleRotateVelocity + spinBonus));
-
 		_timeAlive += Time.deltaTime;
 	}
+
+#endregion
+
+#region Internal Helpers
 	private void _bounceOfWall(float wallX){
 		Vector3 pos = transform.position;
 		float middle = Utility.GetMiddleX();
@@ -81,7 +85,9 @@ public class Player : MonoBehaviour {
 			}
 		}
 	}
+#endregion
 
+#region Public Methods
 	public Rect GetRect(){
 		Rect fullSizeRect = Utility.RectForBounds(sprite.bounds);
 		return Utility.ScaleRect(fullSizeRect, transform.localScale.x);
@@ -89,4 +95,8 @@ public class Player : MonoBehaviour {
 	public void Die(){
 		GameObject.Destroy(this.gameObject);
 	}
+	public void DeployParachute(){
+
+	}
+#endregion
 }

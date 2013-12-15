@@ -5,6 +5,7 @@ public class ObstacleSpawner : MonoBehaviour {
 
 	// Connections
 	public GameObject obstaclePrefab;
+	public GameObject powerupPrefab;
 
 	// Internal State
 	private float _cooldown = 0.0f;
@@ -18,10 +19,17 @@ public class ObstacleSpawner : MonoBehaviour {
 	void Update () {
 		_cooldown -= Time.deltaTime;
 		if (_cooldown <= 0){
-			GameObject obstacle = (GameObject)GameObject.Instantiate(obstaclePrefab);
-			Vector3 randPos = 0.3f * Utility.GetWidth() * Utility.NormalizedRadialSpread();
-			obstacle.transform.position = this.transform.position + randPos;
+			if (UnityEngine.Random.value > 0.1f){
+				_spawnObject(obstaclePrefab);
+			}else{
+				_spawnObject(powerupPrefab);
+			}
 			_cooldown = 3.0f;
 		}
+	}
+	private void _spawnObject(GameObject prefab){
+		GameObject p = (GameObject)GameObject.Instantiate(prefab);
+		Vector3 randPos = new Vector3(Utility.GetWidth() * 0.75f * (UnityEngine.Random.value - 0.5f), 0, 0);
+		p.transform.position = this.transform.position + randPos;
 	}
 }
