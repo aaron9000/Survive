@@ -8,15 +8,18 @@ public class GameLogic : MonoBehaviour {
 	public GameObject mainMenuPrefab;
 	public GameObject replayMenuPrefab;
 	public GameObject scoreBannerPrefab;
+	public Font customFont;
 
 	// Internal State
-	private bool _playerDead = false;
 	private float _gameTime = 0.0f;
 	private float _speedRatio = 1.0f;
 	private float _lastSpeedScale = 1.0f;
+	private float _distance = 0.0f;
 	private Player _player;
 	private GameState _gameState = GameState.Launch;
-	public GameObject _currentMenu = null;
+	private GameObject _currentMenu = null;
+	private GUIStyle _style;
+
 
 	// Singleton Instance
 	private static GameLogic _instance;
@@ -43,11 +46,23 @@ public class GameLogic : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		_style = new GUIStyle ();
+		_style.font = customFont;
+		_style.fontSize = 56;
+		_style.alignment = TextAnchor.MiddleCenter;
+		_style.normal.textColor = Color.white;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		_gameTime += Time.deltaTime;
+		if (_player != null) {
+			_distance += Time.deltaTime * _getSpeedScale () * 2.5f;
+		}
+	}
+
+	void OnGUI(){
 		// Dealing with various gamestates
 		switch (_gameState) {
 		case GameState.Launch:
@@ -63,18 +78,23 @@ public class GameLogic : MonoBehaviour {
 			_handleReplay();
 			break;
 		}
-
-		_gameTime += Time.deltaTime;
 	}
 	#endregion
 
 
 #region Gamestate Helpers
+	private string _getScoreText(){
+		return ((int)(_distance)).ToString ();
+	}
 	private void _handleGameplay (){
 		// Bring counter in first
 		if (_translateMenuAndCheckPlacement () == false) {
 			return;
 		}
+
+		// Show text
+		Rect labelRect = new Rect (355, 42, 100, 64);
+		GUI.Label (labelRect, _getScoreText(), _style);
 
 		// Spawn player if one does not exist
 		if (_player == null) {
@@ -107,6 +127,10 @@ public class GameLogic : MonoBehaviour {
 			return;
 		}
 
+		// Show text
+		Rect labelRect = new Rect (265, 420, 100, 64);
+		GUI.Label (labelRect, _getScoreText(), _style);
+
 		// If done, press enters game
 		if (_shouldContinue()) {
 			_launchGame();
@@ -128,6 +152,7 @@ public class GameLogic : MonoBehaviour {
 	private void _launchGame(){
 		_gameState = GameState.Game;
 		_gameTime = 0.0f;
+		_distance = 0.0f;
 		GameObject[] obstacles = GameObject.FindGameObjectsWithTag (Constants.ObstacleTag);
 		foreach (GameObject obstacle in obstacles) {
 			GameObject.Destroy(obstacle);
