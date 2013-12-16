@@ -47,6 +47,7 @@ public class Powerup : MonoBehaviour {
 	}
 
 	private void _sparkleEffect(){
+		SoundManager.PlaySound (SoundManager.SoundDef.Powerup);
 		GameObject p = (GameObject)GameObject.Instantiate(sparklePrefab);
 		p.transform.position = transform.position;
 	}

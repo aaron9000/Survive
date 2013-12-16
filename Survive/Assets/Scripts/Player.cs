@@ -114,10 +114,12 @@ public class Player : MonoBehaviour {
 		}
 	}
 	private void _bloodEffect(){
+		SoundManager.PlaySound (SoundManager.SoundDef.Splat);
 		GameObject p = (GameObject)GameObject.Instantiate(bloodPrefab);
 		p.transform.position = transform.position;
 	}
 	private void _gibEffect(){
+		SoundManager.PlaySound (SoundManager.SoundDef.Splat);
 		GameObject p = (GameObject)GameObject.Instantiate(gibPrefab);
 		p.transform.position = transform.position;
 	}

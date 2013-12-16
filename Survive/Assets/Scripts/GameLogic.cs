@@ -39,7 +39,7 @@ public class GameLogic : MonoBehaviour {
 		Launch = 3
 	}
 
-#region Unity Lifecycle
+	#region Unity Lifecycle
 	void Awake (){
 		_instance = this;
 	}
@@ -82,7 +82,7 @@ public class GameLogic : MonoBehaviour {
 	#endregion
 
 
-#region Gamestate Helpers
+	#region Gamestate Helpers
 	private string _getScoreText(){
 		return ((int)(_distance)).ToString ();
 	}
@@ -92,7 +92,7 @@ public class GameLogic : MonoBehaviour {
 			return;
 		}
 
-		// Show text
+		// Show distance text
 		Rect labelRect = new Rect (355, 42, 100, 64);
 		GUI.Label (labelRect, _getScoreText(), _style);
 
@@ -127,7 +127,7 @@ public class GameLogic : MonoBehaviour {
 			return;
 		}
 
-		// Show text
+		// Show distance text
 		Rect labelRect = new Rect (265, 420, 100, 64);
 		GUI.Label (labelRect, _getScoreText(), _style);
 
@@ -183,10 +183,10 @@ public class GameLogic : MonoBehaviour {
 		float menuHeight = _currentMenu.GetComponentInChildren<SpriteRenderer>().renderer.bounds.size.y;
 		_currentMenu.transform.position = new Vector3 (Utility.GetMiddleX(), Utility.GetTopEdge() + menuHeight, 0);
 	}
-#endregion
+	#endregion
 	
 
-#region Internal Helpers
+	#region Internal Helpers
 	protected void _spawnPlayer(){
 		GameObject p = (GameObject)GameObject.Instantiate(playerPrefab);
 		p.transform.position = new Vector3(Utility.GetMiddleX(), Utility.GetBottomEdge() + (Utility.GetHeight() * 1.2f), 0);
@@ -213,7 +213,10 @@ public class GameLogic : MonoBehaviour {
 		_player.DeployParachute();
 	}
 	protected float _getSpeedScale(){
+		// Use previous speed be default
 		float speedScale = _lastSpeedScale;
+
+		// If playing, adjust speed by time. Reduce speed when powerup is active
 		if (_gameState == GameState.Game){
 			float delta = MAX_SPEED_SCALE - MIN_SPEED_SCALE;
 			bool powerupActive = false;
@@ -231,8 +234,11 @@ public class GameLogic : MonoBehaviour {
 			_speedRatio = Mathf.Clamp(_speedRatio, POWERUP_SLOW_FACTOR, 1.0f);
 			speedScale *= _speedRatio;
 		}else{
+			// Smoothly transition to idle speed
 			speedScale -= Time.deltaTime * 0.01f;
 		}
+
+		// Clamp this to sane values just in case
 		speedScale = Mathf.Clamp (speedScale, MIN_SPEED_SCALE, MAX_SPEED_SCALE);
 		_lastSpeedScale = speedScale;
 		return speedScale;
@@ -245,9 +251,9 @@ public class GameLogic : MonoBehaviour {
 	protected bool _shouldSpawnObstacle(){
 		return (bool)(_gameState == GameState.Game);
 	}
-#endregion
+	#endregion
 
-#region Static Methods
+	#region Static Methods
 	public static void KillPlayer(){
 		_instance._killPlayer();
 	}
@@ -266,5 +272,5 @@ public class GameLogic : MonoBehaviour {
 	public static bool ShouldSpawnObstacle(){
 		return _instance._shouldSpawnObstacle();
 	}
-#endregion
+	#endregion
 }
