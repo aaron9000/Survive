@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
 	public SpriteRenderer sprite;	
 	public GameObject bloodPrefab;
 	public GameObject gibPrefab;
+	public ParticleSystem sparkleParticle;
 
 	// Internal State
 	private float _parachuteLivetime = 0.0f;
@@ -28,6 +29,8 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_width = Utility.GetSpriteWidth(sprite) * PLAYER_SCALE;	
+		sparkleParticle.Stop ();
+		sparkleParticle.renderer.sortingLayerName = Constants.EffectsLayerName;
 		transform.localScale = new Vector3(PLAYER_SCALE, PLAYER_SCALE, 1.0f);
 	}
 	
@@ -81,8 +84,14 @@ public class Player : MonoBehaviour {
 		sprite.transform.Rotate(Vector3.forward, Time.deltaTime * (idleRotateVelocity + spinBonus));
 		_timeAlive += Time.deltaTime;
 
-		// Tick down powerup
+		// Tick down powerupm
 		_parachuteLivetime -= Time.deltaTime;
+		bool parachuteActive = ParachuteIsActive ();
+		if (sparkleParticle.isStopped && parachuteActive){
+			sparkleParticle.Play ();
+		}else if (sparkleParticle.isPlaying && !parachuteActive){
+			sparkleParticle.Stop ();
+		}
 	}
 
 #endregion

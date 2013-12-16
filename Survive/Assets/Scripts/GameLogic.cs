@@ -16,6 +16,7 @@ public class GameLogic : MonoBehaviour {
 	private float _lastSpeedScale = 1.0f;
 	private Player _player;
 	private GameState _gameState = GameState.Launch;
+	public GameObject _currentMenu = null;
 
 	// Singleton Instance
 	private static GameLogic _instance;
@@ -107,7 +108,15 @@ public class GameLogic : MonoBehaviour {
 	private void _handleLaunch(){
 
 		// Move to menu
+		_showMenu ();
+	}
+	private void _showReplay(){
+		_gameState = GameState.Replay;
+		_openMenu ();
+	}
+	private void _showMenu(){
 		_gameState = GameState.Menu;
+		_openMenu ();
 	}
 	private void _launchGame(){
 		_gameState = GameState.Game;
@@ -116,8 +125,33 @@ public class GameLogic : MonoBehaviour {
 		foreach (GameObject obstacle in obstacles) {
 			GameObject.Destroy(obstacle);
 		}
+		_openMenu ();
+	}
+	private void _openMenu(){
+		if (_currentMenu != null){
+			GameObject.Destroy(_currentMenu);
+			_currentMenu = null;
+		}
+		GameObject prefab = null;
+		switch (_gameState){
+			case GameState.Game:
+				prefab = scoreBannerPrefab;
+				break;
+			case GameState.Menu:
+				prefab = mainMenuPrefab;
+				break;
+			case GameState.Replay:
+				prefab = replayMenuPrefab;
+				break;
+		}
+		if (prefab == null) {
+			return;
+		}
+		_currentMenu = (GameObject)GameObject.Instantiate (prefab);
+		_currentMenu.transform.position = new Vector3 (Utility.GetMiddleX(), Utility.GetTopEdge(), 0);
 	}
 #endregion
+	
 
 #region Internal Helpers
 	protected void _spawnPlayer(){
@@ -137,7 +171,7 @@ public class GameLogic : MonoBehaviour {
 		}
 		_player.Die();
 		_player = null;
-		_gameState = GameState.Replay;
+		_showReplay ();
 	}
 	protected void _awardPowerup(){
 		if (_player == null){

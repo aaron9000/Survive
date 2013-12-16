@@ -6,4 +6,5 @@ public class Constants {
 	public const float ScreenWidth = 640;
 	public const float PowerupChance = 0.04f;
 	public const string ObstacleTag = "Obstacle";
+	public const string EffectsLayerName = "Effects";
 }
