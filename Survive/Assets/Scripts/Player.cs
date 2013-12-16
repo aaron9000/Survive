@@ -58,12 +58,12 @@ public class Player : MonoBehaviour {
 		}
 
 		// Movement
-		if (Input.GetKey(KeyCode.A)){
+		if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)){
 			// Left
 			_velocity = new Vector2(Mathf.Clamp(_velocity.x - ACCEL * Time.deltaTime, -MAX_SPEED, MAX_SPEED), 0);
 			_lastDirectionWasLeft = true;
 		}
-		if (Input.GetKey(KeyCode.D)){
+		if (Input.GetKey(KeyCode.D || Input.GetKey(KeyCode.RightArrow))){
 			// Right
 			_velocity = new Vector2(Mathf.Clamp(_velocity.x + ACCEL * Time.deltaTime, -MAX_SPEED, MAX_SPEED), 0);
 			_lastDirectionWasLeft = false;
