@@ -72,6 +72,11 @@ public class GameLogic : MonoBehaviour {
 
 #region Gamestate Helpers
 	private void _handleGameplay (){
+		// Bring counter in first
+		if (_translateMenuAndCheckPlacement () == false) {
+			return;
+		}
+
 		// Spawn player if one does not exist
 		if (_player == null) {
 			_spawnPlayer();
@@ -79,10 +84,7 @@ public class GameLogic : MonoBehaviour {
 	}
 	private void _handleMenu (){
 		// Animate menu in
-		bool menuIsInPlace = true;
-		if (menuIsInPlace == false) {
-			// Animate in
-			
+		if (_translateMenuAndCheckPlacement () == false) {
 			return;
 		}
 
@@ -91,12 +93,16 @@ public class GameLogic : MonoBehaviour {
 			_launchGame();
 		}
 	}
+	private bool _translateMenuAndCheckPlacement(){
+		bool menuIsInPlace = _currentMenu.transform.position.y <= Utility.GetTopEdge();
+		if (menuIsInPlace == false) {
+			_currentMenu.transform.Translate(new Vector3(0, Time.deltaTime * -6.0f, 0));
+		}
+		return menuIsInPlace;
+	}
 	private void _handleReplay (){
 		// Animate counter in
-		bool menuIsInPlace = true;
-		if (menuIsInPlace == false) {
-			// Animate in
-
+		if (_translateMenuAndCheckPlacement () == false) {
 			return;
 		}
 
@@ -148,7 +154,8 @@ public class GameLogic : MonoBehaviour {
 			return;
 		}
 		_currentMenu = (GameObject)GameObject.Instantiate (prefab);
-		_currentMenu.transform.position = new Vector3 (Utility.GetMiddleX(), Utility.GetTopEdge(), 0);
+		float menuHeight = _currentMenu.GetComponentInChildren<SpriteRenderer>().renderer.bounds.size.y;
+		_currentMenu.transform.position = new Vector3 (Utility.GetMiddleX(), Utility.GetTopEdge() + menuHeight, 0);
 	}
 #endregion
 	
