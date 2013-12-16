@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class Constants {
-	public const float ScreenHeight = 1136;
-	public const float ScreenWidth = 640;
-	public const float PowerupChance = 0.04f;
-	public const string ObstacleTag = "Obstacle";
-	public const string EffectsLayerName = "Effects";
+	public const float SCREEN_HEIGHT = 1136;
+	public const float SCREEN_WIDTH = 640;
+	public const float POWERUP_CHANCE = 0.04f;
+	public const string OBSTACLE_TAG = "Obstacle";
+	public const string EFFECTS_LAYER_NAME = "Effects";
 }

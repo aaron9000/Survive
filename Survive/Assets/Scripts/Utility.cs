@@ -35,15 +35,15 @@ public class Utility{
 		return (GetLeftEdge() + GetWidth() * 0.5f);
 	}
 	public static float GetSpriteHeight(SpriteRenderer sprite){
-		float scaleRatio = sprite.sprite.texture.height / Constants.ScreenHeight;
+		float scaleRatio = sprite.sprite.texture.height / Constants.SCREEN_HEIGHT;
 		return scaleRatio * GetHeight();
 	}
 	public static float GetSpriteWidth(SpriteRenderer sprite){
-		float scaleRatio = sprite.sprite.texture.width / Constants.ScreenHeight;
+		float scaleRatio = sprite.sprite.texture.width / Constants.SCREEN_HEIGHT;
 		return scaleRatio * GetWidth();
 	}
 	public static float GetScreenRatio(){
-		return Screen.height / Constants.ScreenHeight;
+		return Screen.height / Constants.SCREEN_HEIGHT;
 	}
 	public static Vector3 NormalizedRadialSpread(){
 		float angle = UnityEngine.Random.value * Mathf.PI * 2.0f;	

@@ -19,8 +19,7 @@ public class GameLogic : MonoBehaviour {
 	private GameState _gameState = GameState.Launch;
 	private GameObject _currentMenu = null;
 	private GUIStyle _style;
-
-
+	
 	// Singleton Instance
 	private static GameLogic _instance;
 
@@ -83,9 +82,6 @@ public class GameLogic : MonoBehaviour {
 
 
 	#region Gamestate Helpers
-	private string _getScoreText(){
-		return ((int)(_distance)).ToString ();
-	}
 	private void _handleGameplay (){
 		// Bring counter in first
 		if (_translateMenuAndCheckPlacement () == false) {
@@ -110,16 +106,6 @@ public class GameLogic : MonoBehaviour {
 		if (_shouldContinue()) {
 			_launchGame();
 		}
-	}
-	private bool _shouldContinue(){
-		return (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0));
-	}
-	private bool _translateMenuAndCheckPlacement(){
-		bool menuIsInPlace = _currentMenu.transform.position.y <= Utility.GetTopEdge();
-		if (menuIsInPlace == false) {
-			_currentMenu.transform.Translate(new Vector3(0, Time.deltaTime * -6.0f, 0));
-		}
-		return menuIsInPlace;
 	}
 	private void _handleReplay (){
 		// Animate counter in
@@ -153,7 +139,7 @@ public class GameLogic : MonoBehaviour {
 		_gameState = GameState.Game;
 		_gameTime = 0.0f;
 		_distance = 0.0f;
-		GameObject[] obstacles = GameObject.FindGameObjectsWithTag (Constants.ObstacleTag);
+		GameObject[] obstacles = GameObject.FindGameObjectsWithTag (Constants.OBSTACLE_TAG);
 		foreach (GameObject obstacle in obstacles) {
 			GameObject.Destroy(obstacle);
 		}
@@ -184,10 +170,23 @@ public class GameLogic : MonoBehaviour {
 		_currentMenu.transform.position = new Vector3 (Utility.GetMiddleX(), Utility.GetTopEdge() + menuHeight, 0);
 		SoundManager.PlaySound (SoundManager.SoundDef.Click);
 	}
+	private bool _shouldContinue(){
+		return (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0));
+	}
+	private string _getScoreText(){
+		return ((int)(_distance)).ToString ();
+	}
+	private bool _translateMenuAndCheckPlacement(){
+		bool menuIsInPlace = _currentMenu.transform.position.y <= Utility.GetTopEdge();
+		if (menuIsInPlace == false) {
+			_currentMenu.transform.Translate(new Vector3(0, Time.deltaTime * -6.0f, 0));
+		}
+		return menuIsInPlace;
+	}
 	#endregion
 	
 
-	#region Internal Helpers
+	#region Gameplay Helpers
 	protected void _spawnPlayer(){
 		GameObject p = (GameObject)GameObject.Instantiate(playerPrefab);
 		p.transform.position = new Vector3(Utility.GetMiddleX(), Utility.GetBottomEdge() + (Utility.GetHeight() * 1.2f), 0);
@@ -253,6 +252,7 @@ public class GameLogic : MonoBehaviour {
 		return (bool)(_gameState == GameState.Game);
 	}
 	#endregion
+
 
 	#region Static Methods
 	public static void KillPlayer(){

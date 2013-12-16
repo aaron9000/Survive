@@ -13,6 +13,7 @@ public class DebrisSpawner : MonoBehaviour {
 	private const float START_COUNT = 10;
 	private const float SPAWN_COOLDOWN = 0.5f;
 
+	#region Unity Lifecycle
 	// Use this for initialization
 	void Start () {
 		// Create a bunch at the start to fill screen
@@ -28,7 +29,9 @@ public class DebrisSpawner : MonoBehaviour {
 			_cooldown = SPAWN_COOLDOWN;
 		}
 	}
+	#endregion
 
+	#region Helpers
 	private void _createDebris(bool fillingScreen){
 		GameObject debris = (GameObject)GameObject.Instantiate(debrisPrefab);
 		Vector3 randPos = (0.3f * Utility.GetWidth() * Utility.NormalizedRadialSpread());
@@ -45,4 +48,5 @@ public class DebrisSpawner : MonoBehaviour {
 			_createDebris(true);
 		}
 	}
+	#endregion
 }

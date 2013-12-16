@@ -14,6 +14,7 @@ public class Powerup : MonoBehaviour {
 	// Constants
 	private const float SPEED = 1.0f;
 
+	#region Unity Lifecycle
 	// Use this for initialization
 	void Start () {
 		_height = Utility.GetSpriteHeight(sprite);
@@ -45,10 +46,13 @@ public class Powerup : MonoBehaviour {
 		glow.transform.Rotate(Vector3.forward, Time.deltaTime * 15.0f);
 		glow.transform.localScale = new Vector3(scale, scale, scale);
 	}
+	#endregion
 
+	#region Helpers
 	private void _sparkleEffect(){
 		SoundManager.PlaySound (SoundManager.SoundDef.Powerup);
 		GameObject p = (GameObject)GameObject.Instantiate(sparklePrefab);
 		p.transform.position = transform.position;
 	}
+	#endregion
 }

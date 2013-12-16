@@ -25,12 +25,12 @@ public class Player : MonoBehaviour {
 	private const float PLAYER_SCALE = 0.5f;
 	private const float BOUNCE_SPEED = 3.0f;
 
-#region Unity Lifecycle
+	#region Unity Lifecycle
 	// Use this for initialization
 	void Start () {
 		_width = Utility.GetSpriteWidth(sprite) * PLAYER_SCALE;	
 		sparkleParticle.Stop ();
-		sparkleParticle.renderer.sortingLayerName = Constants.EffectsLayerName;
+		sparkleParticle.renderer.sortingLayerName = Constants.EFFECTS_LAYER_NAME;
 		transform.localScale = new Vector3(PLAYER_SCALE, PLAYER_SCALE, 1.0f);
 	}
 	
@@ -70,7 +70,6 @@ public class Player : MonoBehaviour {
 		}	
 
 		// Detect wall collision
-		Vector3 pos = transform.position;
 		float leftEdge = Utility.GetLeftEdge() + _width * 0.5f;
 		float rightEdge = Utility.GetRightEdge() - _width * 0.5f;
 		_bounceOfWall(leftEdge);
@@ -84,7 +83,7 @@ public class Player : MonoBehaviour {
 		sprite.transform.Rotate(Vector3.forward, Time.deltaTime * (idleRotateVelocity + spinBonus));
 		_timeAlive += Time.deltaTime;
 
-		// Tick down powerupm
+		// Tick down powerup
 		_parachuteLivetime -= Time.deltaTime;
 		bool parachuteActive = ParachuteIsActive ();
 		if (sparkleParticle.isStopped && parachuteActive){
@@ -93,13 +92,10 @@ public class Player : MonoBehaviour {
 			sparkleParticle.Stop ();
 		}
 	}
+	#endregion
 
-#endregion
-
-#region Internal Helpers
+	#region Internal Helpers
 	private void _bounceOfWall(float wallX){
-
-		// Handle phyics
 		Vector3 pos = transform.position;
 		float middle = Utility.GetMiddleX();
 		if ((pos.x > wallX && wallX > middle) || (pos.x < wallX && wallX < middle)){
@@ -124,9 +120,9 @@ public class Player : MonoBehaviour {
 		GameObject p = (GameObject)GameObject.Instantiate(gibPrefab);
 		p.transform.position = transform.position;
 	}
-#endregion
+	#endregion
 
-#region Public Methods
+	#region Public Methods
 	public Rect GetRect(){
 		Rect fullSizeRect = Utility.RectForBounds(sprite.bounds);
 		return Utility.ScaleRect(fullSizeRect, transform.localScale.x);
@@ -141,5 +137,5 @@ public class Player : MonoBehaviour {
 	public bool ParachuteIsActive(){
 		return _parachuteLivetime > 0.0f;
 	}
-#endregion
+	#endregion
 }

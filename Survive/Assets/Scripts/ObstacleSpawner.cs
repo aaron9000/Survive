@@ -22,7 +22,7 @@ public class ObstacleSpawner : MonoBehaviour {
 			return;
 		}
 		if (_cooldown <= 0){
-			if (UnityEngine.Random.value > Constants.PowerupChance){
+			if (UnityEngine.Random.value > Constants.POWERUP_CHANCE){
 				_spawnObject(obstaclePrefab);
 			}else{
 				_spawnObject(powerupPrefab);

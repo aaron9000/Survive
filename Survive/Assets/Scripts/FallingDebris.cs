@@ -18,7 +18,7 @@ public class FallingDebris : MonoBehaviour {
 	private const float MIN_FALL_SPEED = 0.3f;
 	private const float MAX_FALL_SPEED = 0.8f;
 
-#region Unity Lifecycle
+	#region Unity Lifecycle
 	// Use this for initialization
 	void Start () {
 
@@ -47,6 +47,5 @@ public class FallingDebris : MonoBehaviour {
 			GameObject.Destroy(this.gameObject);
 		}
 	}
-#endregion
-
+	#endregion
 }

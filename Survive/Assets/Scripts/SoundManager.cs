@@ -36,6 +36,7 @@ public class SoundManager : MonoBehaviour {
 	}
 	#endregion
 
+
 	#region Singleton Methods
 	protected void _playSound(SoundDef sound){
 		AudioClip clip = null;
@@ -62,6 +63,5 @@ public class SoundManager : MonoBehaviour {
 	public static void PlaySound(SoundDef sound){
 		_instance._playSound (sound);
 	}
-
 	#endregion
 }

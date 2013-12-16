@@ -11,8 +11,7 @@ public class ScrollingBackground : MonoBehaviour {
 	// Internal State
 	private float _height = 1.0f;	
 
-#region Unity Lifecycle
-
+	#region Unity Lifecycle
 	// Use this for initialization
 	void Start () {
 		_height = Utility.GetSpriteHeight(top);
@@ -23,9 +22,9 @@ public class ScrollingBackground : MonoBehaviour {
 	void Update () {
 		_scrollRenderers(-scrollSpeed * Time.deltaTime * GameLogic.GetSpeedScale());
 	}
-#endregion
+	#endregion
 
-#region Helpers
+	#region Helpers
 	private void _scrollRenderers(float amount){
 		_scroll(top, amount);
 		_scroll(bottom, amount);
@@ -36,5 +35,5 @@ public class ScrollingBackground : MonoBehaviour {
 			renderer.transform.position -= new Vector3(0, _height * 2.0f, 0);					
 		}
 	}
-#endregion
+	#endregion
 }
