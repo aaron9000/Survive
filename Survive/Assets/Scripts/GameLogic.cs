@@ -9,6 +9,7 @@ public class GameLogic : MonoBehaviour {
 	// Internal State
 	private bool _playerDead = false;
 	private float _gameTime = 0.0f;
+	private float _speedRatio = 1.0f;
 
 	// Singleton Instance
 	private static GameLogic _instance;
@@ -16,9 +17,10 @@ public class GameLogic : MonoBehaviour {
 	// Constants
 	private const float MIN_SPEED_SCALE = 2.0f;
 	private const float MAX_SPEED_SCALE = 5.0f;
-	private const float MIN_SPAWN_DELAY = 0.4f;
+	private const float MIN_SPAWN_DELAY = 0.5f;
 	private const float MAX_SPAWN_DELAY = 1.6f;
 	private const float RAMP_UP_TIME = 60.0f;
+	private const float POWERUP_SLOW_FACTOR = 0.5f;
 
 #region Unity Lifecycle
 	void Awake (){
@@ -59,11 +61,19 @@ public class GameLogic : MonoBehaviour {
 	protected float _getSpeedScale(){
 		float delta = MAX_SPEED_SCALE - MIN_SPEED_SCALE;
 		float speedScale = Mathf.Clamp01(_gameTime / RAMP_UP_TIME) * delta + MIN_SPEED_SCALE;
+		bool powerupActive = false;
 		if (player != null){
 			if (player.GetComponent<Player>().ParachuteIsActive()){
-				speedScale *= 0.5f;
+				powerupActive = true;
 			}
 		}
+		if (powerupActive){
+			_speedRatio -= Time.deltaTime * 0.05f;
+		}else{
+			_speedRatio += Time.deltaTime * 0.05f;
+		}
+		_speedRatio = Mathf.Clamp(_speedRatio, POWERUP_SLOW_FACTOR, 1.0f);
+		speedScale *= _speedRatio;
 		return speedScale;
 	}
 	protected float _getObstacleDelay(){
