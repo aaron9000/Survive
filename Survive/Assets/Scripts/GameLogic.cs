@@ -182,6 +182,7 @@ public class GameLogic : MonoBehaviour {
 		_currentMenu = (GameObject)GameObject.Instantiate (prefab);
 		float menuHeight = _currentMenu.GetComponentInChildren<SpriteRenderer>().renderer.bounds.size.y;
 		_currentMenu.transform.position = new Vector3 (Utility.GetMiddleX(), Utility.GetTopEdge() + menuHeight, 0);
+		SoundManager.PlaySound (SoundManager.SoundDef.Click);
 	}
 	#endregion
 	

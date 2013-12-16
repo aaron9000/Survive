@@ -13,8 +13,9 @@ public class SoundManager : MonoBehaviour {
 
 	// Connections
 	public AudioClip splatSound;
-//	public AudioClip clickSound;
+	public AudioClip clickSound;
 	public AudioClip powerupSound;
+	public AudioClip loseSound;
 
 	// Singleton
 	private static SoundManager _instance;
@@ -41,12 +42,13 @@ public class SoundManager : MonoBehaviour {
 		switch (sound)
 		{
 			case SoundDef.Click:
+				clip = clickSound;
 				break;
 			case SoundDef.Splat:
 				clip = splatSound;
 				break;
 			case SoundDef.Lose:
-				
+				clip = loseSound;
 				break;
 			case SoundDef.Powerup:
 				clip = powerupSound;

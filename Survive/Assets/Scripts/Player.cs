@@ -120,6 +120,7 @@ public class Player : MonoBehaviour {
 	}
 	private void _gibEffect(){
 		SoundManager.PlaySound (SoundManager.SoundDef.Splat);
+		SoundManager.PlaySound (SoundManager.SoundDef.Lose);
 		GameObject p = (GameObject)GameObject.Instantiate(gibPrefab);
 		p.transform.position = transform.position;
 	}
