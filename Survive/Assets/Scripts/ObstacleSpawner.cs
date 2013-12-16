@@ -18,6 +18,9 @@ public class ObstacleSpawner : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		_cooldown -= Time.deltaTime;
+		if (GameLogic.ShouldSpawnObstacle() == false){
+			return;
+		}
 		if (_cooldown <= 0){
 			if (UnityEngine.Random.value > Constants.PowerupChance){
 				_spawnObject(obstaclePrefab);

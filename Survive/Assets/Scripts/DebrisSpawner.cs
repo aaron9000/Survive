@@ -31,12 +31,12 @@ public class DebrisSpawner : MonoBehaviour {
 
 	private void _createDebris(bool fillingScreen){
 		GameObject debris = (GameObject)GameObject.Instantiate(debrisPrefab);
-		Vector3 randPos = 0.3f * Utility.GetWidth() * Utility.NormalizedRadialSpread();
+		Vector3 randPos = (0.3f * Utility.GetWidth() * Utility.NormalizedRadialSpread());
 		if (fillingScreen == false){
 			debris.transform.position = this.transform.position + randPos;
-		}else{
+		} else {
 			var randY = Utility.GetBottomEdge() + Utility.GetHeight() * UnityEngine.Random.value;
-			debris.transform.position = new Vector3(Utility.GetMiddleX(), randY, 0) + randPos;
+			debris.transform.position = (new Vector3(0, randY, 0) + randPos);
 		}
 	}
 

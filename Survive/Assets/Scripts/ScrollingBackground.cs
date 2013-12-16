@@ -16,7 +16,7 @@ public class ScrollingBackground : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_height = Utility.GetSpriteHeight(top);
-		_scrollRenderers(-scrollSpeed * UnityEngine.Random.value);
+		_scrollRenderers(-scrollSpeed * UnityEngine.Random.value * 100.0f);
 	}
 	
 	// Update is called once per frame

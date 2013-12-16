@@ -15,7 +15,8 @@ public class Player : MonoBehaviour {
 	private float _anchorY = 0.0f;
 	private bool _lastDirectionWasLeft = false;
 	private Vector2 _velocity = Vector2.zero;
-
+	private bool _hasEntered = false;
+	
 	// Constants
 	private const float MAX_SPEED = 25.0f;
 	private const float ACCEL = 45.0f;
@@ -27,7 +28,6 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		_width = Utility.GetSpriteWidth(sprite) * PLAYER_SCALE;	
-		_anchorY = transform.position.y;
 		transform.localScale = new Vector3(PLAYER_SCALE, PLAYER_SCALE, 1.0f);
 	}
 	
@@ -41,7 +41,19 @@ public class Player : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+
+		// Animate into scene after spawn
+		if (_hasEntered == false){
+			float desiredHeight = Utility.GetBottomEdge() + Utility.GetHeight() * 0.8f;
+			if (transform.position.y <= desiredHeight){
+				_hasEntered = true;
+				_anchorY = transform.position.y;
+			}else{
+				transform.Translate(new Vector3(0, -Time.deltaTime * 2.0f));
+			}
+			return;
+		}
+
 		// Movement
 		if (Input.GetKey(KeyCode.A)){
 			// Left
