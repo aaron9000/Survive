@@ -48,26 +48,25 @@ public class GameLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		// Dealing with various gamestates
 		switch (_gameState) {
-			case GameState.Launch:
-				_handleLaunch();
-				break;
-			case GameState.Game:
-				_handleGameplay();
-				break;
-			case GameState.Menu:
-				_handleMenu();
-				break;
-			case GameState.Replay:
-				_handleReplay();
-				break;
+		case GameState.Launch:
+			_handleLaunch();
+			break;
+		case GameState.Game:
+			_handleGameplay();
+			break;
+		case GameState.Menu:
+			_handleMenu();
+			break;
+		case GameState.Replay:
+			_handleReplay();
+			break;
 		}
 
 		_gameTime += Time.deltaTime;
 	}
-#endregion
+	#endregion
 
 
 #region Gamestate Helpers
@@ -88,10 +87,12 @@ public class GameLogic : MonoBehaviour {
 			return;
 		}
 
-		// If done, tapping enters game
-		if (Input.GetKey(KeyCode.Space)){
+		if (_shouldContinue()) {
 			_launchGame();
 		}
+	}
+	private bool _shouldContinue(){
+		return (Input.GetKey(KeyCode.Space) || Input.GetMouseButton(0));
 	}
 	private bool _translateMenuAndCheckPlacement(){
 		bool menuIsInPlace = _currentMenu.transform.position.y <= Utility.GetTopEdge();
@@ -107,7 +108,7 @@ public class GameLogic : MonoBehaviour {
 		}
 
 		// If done, press enters game
-		if (Input.GetKey(KeyCode.Space)){
+		if (_shouldContinue()) {
 			_launchGame();
 		}
 	}

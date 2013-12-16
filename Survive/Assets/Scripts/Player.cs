@@ -47,7 +47,7 @@ public class Player : MonoBehaviour {
 
 		// Animate into scene after spawn
 		if (_hasEntered == false){
-			float desiredHeight = Utility.GetBottomEdge() + Utility.GetHeight() * 0.8f;
+			float desiredHeight = Utility.GetBottomEdge() + Utility.GetHeight() * 0.7f;
 			if (transform.position.y <= desiredHeight){
 				_hasEntered = true;
 				_anchorY = transform.position.y;
