@@ -1,4 +1,4 @@
 Survive
 =======
 
-A Unity3d avoider game for the Ludum Dare 28 Gamejam.
+A Unity3d avoider game for the Ludum Dare 28 game jam.
